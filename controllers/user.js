@@ -15,7 +15,9 @@ let controller = {
             let hash = bcrypt.hashSync(req.body.password, parseInt(process.env.BCRYPT_ROUNDS));
             let inserted = UserService.addUser({
                 email: req.body.email,
-                password: hash
+                nombre_completo: req.body.nombre_completo,
+                password: hash,
+                role: req.body.role
             })
             res.json(inserted)
         }
@@ -28,9 +30,16 @@ let controller = {
             const payload = {
                 sub: user.id,
                 exp: Date.now() + parseInt(process.env.JWT_LIFETIME),
-                username: user.email
+                email: user.email
             };
+            const token = jwt.sign(JSON.stringify(payload), process.env.JWT_SECRET, {algorithm: process.env.JWT_ALGORITHM});
+            res.json({
+                email: user.email,
+                token: token
+            });
            }
-       })
+       })(req, res)
    }
 }
+
+module.exports = controller;

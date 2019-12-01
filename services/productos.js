@@ -1,3 +1,6 @@
+const _ = require('lodash');
+const categoriasServicio = require('./categorias')
+const comentariosServicio = require('./comentarios')
 productos = [{
     id: "1",
     nombre: "Asus Dual GeForce RTX 2070 SUPER EVO OC Edition 8GB GDDR6",
@@ -19,7 +22,7 @@ productos = [{
     precio_actual: 449.90,
     fecha_publicacion: JSON.stringify(new Date(2019, 7, 22)),
     stock_actual: 254,
-    categoria_id:"2",
+    categoria_id: "2",
     comentarios_id: [
 
     ]
@@ -62,3 +65,50 @@ productos = [{
     ]
 },
 ]
+
+let service = {
+    findAll: () => {
+        let productosDto = [];
+        productos.forEach(producto => {
+            let comentarios = [];
+            producto.comentarios_id.forEach(c => {
+                comentario = comentariosServicio.findById(c);
+                comentarios.push(comentario);
+            })
+            let productoDto = {
+                id: producto.id,
+                nombre: producto.nombre,
+                descripcion: producto.descripcion,
+                precio_actual: producto.precio_actual,
+                fecha_publicacion: producto.fecha_publicacion,
+                stock_actual: producto.stock_actual,
+                categoria: categoriasServicio.findById(producto.categoria_id),
+                comentarios: comentarios
+            }
+            productosDto.push(productoDto)
+        })
+    },
+    findById: (id) => {
+        let producto = _.find(productos, p => p.id == id);
+        let comentarios = [];
+        producto.comentarios_id.forEach(c => {
+            comentario = comentariosServicio.findById(c);
+            comentarios.push(comentario);
+        })
+        let productoDto = {
+            id: producto.id,
+            nombre: producto.nombre,
+            descripcion: producto.descripcion,
+            precio_actual: producto.precio_actual,
+            fecha_publicacion: producto.fecha_publicacion,
+            stock_actual: producto.stock_actual,
+            categoria: categoriasServicio.findById(producto.categoria_id),
+            comentarios: comentarios
+        }
+
+        return productoDto;
+    },
+
+}
+
+module.exports = service

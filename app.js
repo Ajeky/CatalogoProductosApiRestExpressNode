@@ -16,16 +16,17 @@ const JwtStrategy = require('passport-jwt').Strategy;
 const LocalStrategy = require('passport-local').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const bcrypt = require('bcryptjs');
-const users = require('./routes/users');
+const users_routes = require('./routes/users');
 const UserService = require('./services/clientes')
+const productos_routes = 
 
 /* Configuración de Passport */
 passport.use(new LocalStrategy({
-    usernameField: "username",
+    usernameField: "email",
     passwordField: "password",
     session: false
-}, (username, password, done) => {
-    let data = UserService.findUser({ email: username });
+}, (email, password, done) => {
+    let data = UserService.findUser({ email: email });
     if (data === undefined) return done(null, false);
     else if (!bcrypt.compareSync(password, data.password)) {
         return done(null, false);
@@ -53,6 +54,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(passport.initialize())
-app.use('/api/v1/users', users)
+app.use('/api/', users_routes)
+app.use('/api/v1/products/', productos_routes)
 
 module.exports = app

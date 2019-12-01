@@ -1,3 +1,6 @@
+const clientesServicio = require('./clientes')
+const _ = require('lodash')
+
 comentarios = [
     {
         id: "1",
@@ -30,3 +33,18 @@ comentarios = [
         fecha_publicación: JSON.stringify(new Date(2019, 10, 15))
     },
 ]
+
+let service = {
+    findById: (id) => {
+        let comentario = _.find(comentarios, c => c.id == id);
+        let comentarioDto = {
+            id: comentario.id,
+            nombre_autor: clientesServicio.findById(comentario.autor_id).nombre_completo,
+            cuerpo: comentario.cuerpo,
+            fecha_publicación: comentario.fecha_publicación
+        }
+        return comentarioDto;
+    }
+}
+
+module.exports = service
