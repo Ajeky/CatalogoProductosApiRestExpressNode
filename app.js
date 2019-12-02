@@ -18,7 +18,7 @@ const ExtractJwt = require('passport-jwt').ExtractJwt;
 const bcrypt = require('bcryptjs');
 const users_routes = require('./routes/users');
 const UserService = require('./services/clientes')
-const productos_routes = 
+const productos_routes = require('./routes/productos');
 
 /* Configuración de Passport */
 passport.use(new LocalStrategy({

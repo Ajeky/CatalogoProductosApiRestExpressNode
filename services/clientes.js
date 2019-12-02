@@ -1,8 +1,7 @@
 const _ = require('lodash')
 const bcrypt = require('bcryptjs')
 
-clientes = [
-    {
+const clientes = [{
         id: "1",
         email: "alvaro@alvaro.com",
         nombre_completo: "Alvaro Marquez Mata",

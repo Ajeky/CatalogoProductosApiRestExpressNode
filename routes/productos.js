@@ -6,3 +6,5 @@ const controlador = require('../controllers/productos');
 
 router.get('/', controlador.findAll);
 router.get('/:id', controlador.findById);
+
+module.exports = router

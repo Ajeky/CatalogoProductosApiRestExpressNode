@@ -1,8 +1,7 @@
 const clientesServicio = require('./clientes')
 const _ = require('lodash')
 
-comentarios = [
-    {
+const comentarios = [{
         id: "1",
         autor_id: "3",
         cuerpo: "Una trajeta de las mejores del mercado, El hecho que sus ventiladores no funcionen en el escritorio si no estamos dandole carga de trabajo la haces muy polivalente y en juegos es una bestia a 2k mas de 60 fps con rtx activado",
